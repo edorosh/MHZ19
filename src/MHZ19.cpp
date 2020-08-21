@@ -105,7 +105,11 @@ void MHZ19::writeCommand(uint8_t cmd[], uint8_t *response)
 			yield();
 			delay(WAIT_READ_DELAY);
 		}
-		mhz19_serial.readBytes(response, MHZ19::RESPONSE_CNT);
+		
+		while (mhz19_serial.available() > 0 ) {
+			mhz19_serial.readBytes(response, MHZ19::RESPONSE_CNT);
+			yield();
+		}
 	}
 }
 
